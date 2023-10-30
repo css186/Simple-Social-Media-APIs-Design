@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from model import Post
+from model.Post import Post
 
 # Create app object
 app = FastAPI()
@@ -17,5 +17,7 @@ def get_posts():
 
 @app.post("/create")
 def create_posts(new_post: Post):
-    print(new_post.model_dump())
+    result = new_post.model_dump()
+    print(result)
+    print(type(result))
     return new_post
