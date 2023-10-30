@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from model.Post import Post
+from model import Post
 
 # Create app object
 app = FastAPI()
