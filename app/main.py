@@ -1,8 +1,14 @@
+import json
+
 from fastapi import FastAPI, Response, status, HTTPException
 from model.Post import Post
+from service.service import PostService
 
 # Create app object
 app = FastAPI()
+
+# create service object
+post_service = PostService()
 
 
 @app.get("/")
@@ -12,7 +18,8 @@ def root():
 
 @app.get("/posts")
 def get_posts():
-    return {"data": "A List of posts"}
+    posts = post_service.get_posts()
+    return posts
 
 
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
