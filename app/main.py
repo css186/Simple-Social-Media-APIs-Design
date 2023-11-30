@@ -61,8 +61,24 @@ def delete_post(id: int):
 
 
 @app.put("/posts/{id}")
-def update_post(id: int, post: Post):
-    return {"message": "updated post"}
+def update_post(id: int, updates: Post):
+
+    # check if post exists
+    post = post_service.get_post(id)
+    # if not, return 404
+    if not post:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"post with id: {id} was not found"
+        )
+
+    updates = updates.model_dump()
+    title = updates.get("title")
+    content = updates.get("content")
+    published = updates.get("published")
+    post_service.update_post(id, title, content, published)
+
+    return {"message": "post updated"}
 
 
 

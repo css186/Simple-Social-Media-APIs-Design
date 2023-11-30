@@ -16,3 +16,6 @@ class PostService:
 
     def delete_post(self, id):
         return self.post_dao.delete_post(id)
+
+    def update_post(self, id, title, content, published):
+        return self.post_dao.update_post(id, title, content, published)

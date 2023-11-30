@@ -63,3 +63,10 @@ class PostDao:
         self.connection.commit()
         cursor.close()
 
+    def update_post(self, id, title, content, published):
+        cursor = self.connection.cursor()
+        query = "UPDATE posts SET title = %s, content = %s, published = %s WHERE id = %s "
+        cursor.execute(query, (title, content, published, id))
+        self.connection.commit()
+        cursor.close()
+
