@@ -30,7 +30,12 @@ class PostDao:
         columns = [column[0] for column in cursor.description]
         posts = [dict(zip(columns, row)) for row in cursor.fetchall()]
 
+        # close cursor
+        cursor.close()
         return posts
 
-
-
+    def create_post(self, title, content, published):
+        cursor = self.connection.cursor()
+        query = "INSERT INTO posts (title, content, published) VALUES (%s, %s, %s) "
+        cursor.execute(query, (title, content, published))
+        self.connection.commit()

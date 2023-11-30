@@ -25,10 +25,11 @@ def get_posts():
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
 def create_posts(new_post: Post):
     new_post = new_post.model_dump()
-    print(new_post.get("rating"))
-    print(new_post.get("title"))
+    title = new_post.get("title")
+    content = new_post.get("content")
+    published = new_post.get("published")
+    post_service.create_post(title, content, published)
     return new_post
-
 
 @app.get("/posts/{id}")
 def get_post(id: int, response: Response):
