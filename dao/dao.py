@@ -39,3 +39,17 @@ class PostDao:
         query = "INSERT INTO posts (title, content, published) VALUES (%s, %s, %s) "
         cursor.execute(query, (title, content, published))
         self.connection.commit()
+        cursor.close()
+
+    def get_post(self, id):
+        cursor = self.connection.cursor()
+        query = "SELECT id, title, content, published, created_date FROM posts WHERE id = %s "
+        cursor.execute(query, (id,))
+
+        # convert list into json
+        columns = [column[0] for column in cursor.description]
+        row = list(cursor.fetchone())
+        post = dict(zip(columns, row))
+        cursor.close()
+        return post
+

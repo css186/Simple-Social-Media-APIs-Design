@@ -8,3 +8,4 @@ class Post(BaseModel):
     content: str
     published: bool = True  # give default value
     # rating: Optional[int] = None
+

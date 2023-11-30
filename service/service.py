@@ -11,3 +11,5 @@ class PostService:
     def create_post(self, title, content, published):
         self.post_dao.create_post(title, content, published)
 
+    def get_post(self, id):
+        return self.post_dao.get_post(id)
