@@ -13,3 +13,6 @@ class PostService:
 
     def get_post(self, id):
         return self.post_dao.get_post(id)
+
+    def delete_post(self, id):
+        return self.post_dao.delete_post(id)

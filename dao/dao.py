@@ -56,3 +56,10 @@ class PostDao:
         cursor.close()
         return post
 
+    def delete_post(self, id):
+        cursor = self.connection.cursor()
+        query = "DELETE FROM posts WHERE id = %s "
+        cursor.execute(query, (id,))
+        self.connection.commit()
+        cursor.close()
+
