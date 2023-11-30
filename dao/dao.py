@@ -48,7 +48,10 @@ class PostDao:
 
         # convert list into json
         columns = [column[0] for column in cursor.description]
-        row = list(cursor.fetchone())
+        row = cursor.fetchone()
+        if not row:
+            return None
+        row = list(row)
         post = dict(zip(columns, row))
         cursor.close()
         return post
