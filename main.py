@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Body
+from model.post import Post
 
 # Create an instance of FastAPI
 app = FastAPI()
@@ -13,9 +14,5 @@ def get_posts():
 
 
 @app.post("/posts")
-def create_post(payload: dict = Body(...)):
-    return {
-        "message": "Post has been created successfully",
-        "new_post_title": payload["title"],
-        "new_post_contents": payload["contents"]
-    }
+def create_post(new_post: Post):
+    return new_post.model_dump()
