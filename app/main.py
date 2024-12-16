@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Response, HTTPException, status, Depends
-from schemas import Post
+from schemas import PostCreate
 from sqlalchemy.orm import Session
 import models
 from database import SessionLocal, engine, conn, cur, get_db, Base
@@ -21,7 +21,7 @@ def get_posts(db: Session = Depends(get_db)):
     return {"data": posts}
 
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
-def create_post(post: Post, db: Session = Depends(get_db)):
+def create_post(post: PostCreate, db: Session = Depends(get_db)):
     new_post = models.Post(**post.model_dump()) # unpack the post object and create a new Post object
     db.add(new_post) # stage the new post
     db.commit() # commit the new post to the database
@@ -60,7 +60,7 @@ def delete_post(post_id: int, db: Session = Depends(get_db)):
     return {"message": "Post deleted successfully", "details": deleted_post}
 
 @app.put("/posts/{post_id}")
-def update_post(post_id: int, post: Post, db: Session = Depends(get_db)):
+def update_post(post_id: int, post: PostCreate, db: Session = Depends(get_db)):
     query = db.query(models.Post).filter(models.Post.id == post_id)
     updated_post = query.first()
     # sql = """UPDATE posts SET title = %s, content = %s, published = %s WHERE id = %s RETURNING *"""
